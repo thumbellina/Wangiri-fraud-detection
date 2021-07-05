@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        body
+        {
+        background:black; 
+        color: white;
+        font-family:verdana;
+        }
+        div{
+        background: black ; 
+        color:black;
+        font-family:verdana;
+        
+        }
+        form
+        {
+        float:left;
+        margin-right: 50px;
+        }
+        button
+        {
+        font-size : 15px; 
+        width: 150px; 
+        height: 50px;"
+
+
+        }
+        table, tr, th, td {
+        border: 1px solid white;
+        width: 500px;
+        }
+   
+    </style>
+    <head>
+        <title> Home </title>
+    </head>
+    <body>
+        <h1> Wangiri fraud - Outlier detection </h1>
+        <h4> Algorithms </h4> 
+        <hr>
+        <form action="{{ url_for('OSVM') }}" method="post">
+        <button name="OSVM" type="submit"> <i>OSVM</i> </button>
+        </form>
+       
+        <form action="{{ url_for('iForest') }}" method="post">
+        <button> <i>Isolation Forest</i></button>
+        </form>
+
+        <form action="{{ url_for('AutoEnc') }}" method="post">
+        <button>  <i>Auto Encoder </i></button>
+        </form>
+
+        <form action="{{ url_for('naiveBayes') }}" method="post">
+        <button name="naiveBayes" type="submit"> <i>Naive Bayes</i> </button>
+        </form>
+
+        <form action="{{ url_for('randomForest') }}" method="post">
+        <button name="randomForest" type="submit"> <i>Random Forest</i> </button>
+        </form>
+
+        <form action="{{ url_for('SVC') }}" method="post">
+        <button name="SVC" type="submit"> <i>SVM</i> </button>
+        </form>
+
+
+        <form action="{{ url_for('xgboost') }}" method="post">
+        <button name="xgboost" type="submit"> <i>XGBoost</i> </button>
+        </form>
+
+
+        <br>  
+        <br>  
+        <br>  
+        <hr>
+
+        {% if message %}
+      
+         <p>{{ message }} </p>
+      
+        {% endif %}
+        
+        <br> <b>Chosen algorithm : </b> <i>{{ algo }} </i> <br><br>
+        <div>
+        {% if url_test  %}
+        
+        <img src= "{{url_test}}"> &nbsp;&nbsp;&nbsp;
+        {% endif %}
+        {% if url_train  %}
+        <img src= "{{url_train}}">
+        {% endif %}
+        </div>
+        
+        {% if accuracy and f1 and precision and recall %}
+        <br><br>
+        <hr>
+        <h4> Experiment Details </h4>
+        <ul>
+        	<li><i>Positive class : 1 (Wangiri call) , Negative class : 0 (Normal call)<br> <br> </li>
+        	<li>For outlier detection, train dataset has only normal events.So all results in train heat map can be either false positive or true negative</i></li>
+            <li>For classification, the accuracy , precision, recall and f1 score are results after 10 fold cross validation  </i></li>
+        	</ul><br>
+        <b>Test dataset Results </b><br> <br>
+        <table>
+            <th >Accuracy</th><th>F1</th><th>Precision</th><th>Recall</th>
+            <tr ><td>{{ accuracy }}</td><td>{{ f1 }}</td><td>{{ precision }}</td><td>{{ recall }}</td></tr>
+          
+        </table>
+        {% endif %}
+
+        
+    </body>
+</html>
